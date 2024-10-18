@@ -1,19 +1,18 @@
 #include <peterson_mutex.hpp>
 
 #include <thread>
-#include <iostream>
 
 #include <catch2/catch_all.hpp>
 
 #include "tools.hpp"
 
-TEST_CASE("base")
+TEST_CASE("Petrson mutex")
 {
     pm::PetersonMutex mutex;
     int value = 0;
 
     const auto work = [&mutex, &value]
-    (const unsigned thread_id, const size_t count_iterations, const auto sleep_period)
+    (const unsigned thread_id, const size_t count_iterations)
     {
         for (size_t i = 0; i < count_iterations; ++i)
         {
@@ -30,19 +29,15 @@ TEST_CASE("base")
     };
 
     const size_t thread_1_iterations { 200 };
-    const unsigned thread_1_sleep_period_ms { 3 };
     std::thread thread_1 {
         work, 0,
-        thread_1_iterations,
-        std::chrono::milliseconds { thread_1_sleep_period_ms }
+        thread_1_iterations
     };
 
-    const unsigned thread_2_sleep_period_ms { 1 };
     const size_t thread_2_iterations { thread_1_iterations  };
     std::thread thread_2 {
         work, 1,
-        thread_2_iterations,
-        std::chrono::milliseconds { thread_2_sleep_period_ms }
+        thread_2_iterations
     };
 
     const auto expected_value = (thread_1_iterations + thread_2_iterations) * 2;
