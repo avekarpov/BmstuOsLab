@@ -17,4 +17,5 @@ target_link_libraries(
         Catch2::Catch2WithMain
         peterson_mutex
         transaction_memory
+        memory_functions
 )

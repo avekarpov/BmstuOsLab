@@ -13,8 +13,12 @@ if(LAB_ADDRESS_SANITIZER)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libasan")
 endif()
 
+add_compile_options(-mavx)
+add_compile_options(-mavx2)
+
 add_subdirectory(peterson_mutex)
 add_subdirectory(transaction_memory)
+add_subdirectory(memory_functions)
 
 if(LAB_BUILD_TEST)
     add_subdirectory(test)
